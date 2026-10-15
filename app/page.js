@@ -3,6 +3,7 @@ import Waves from '@/components/Waves';
 import Sun from '@/components/Sun';
 import NewsCard from '@/components/NewsCard';
 import ProductCard from '@/components/ProductCard';
+import Partners from '@/components/Partners';
 import { getNews, getFixtures, getPartners, milestones } from '@/lib/airtable';
 import { getProducts } from '@/lib/shopify';
 import { formatDate, isPlayed, isKiribati } from '@/lib/format';
@@ -11,12 +12,12 @@ import { site } from '@/lib/site';
 export const revalidate = 600;
 
 export default async function Home() {
-  const [news, fixtures, products, partners] = await Promise.all([getNews(), getFixtures(), getProducts(), getPartners()]);
+  const [news, fixtures, products, partners] = await Promise.all([getNews(), getFixtures({ team: 'mens' }), getProducts(), getPartners()]);
   const featured = news.find((n) => n.featured) || news[0];
   const others = news.filter((n) => n !== featured).slice(0, 3);
   const today = new Date().toISOString().slice(0, 10);
-  const results = fixtures.filter(isPlayed).sort((a, b) => (a.date < b.date ? 1 : -1));
-  const upcoming = fixtures.filter((f) => !isPlayed(f) && f.date >= today).sort((a, b) => (a.date > b.date ? 1 : -1));
+  const results = fixtures.filter(isPlayed).sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  const upcoming = fixtures.filter((f) => !isPlayed(f) && f.date >= today).sort((a, b) => (a.date > b.date ? 1 : a.date < b.date ? -1 : 0));
   const last = results[0];
   const next = upcoming[0];
 
@@ -35,7 +36,7 @@ export default async function Home() {
           <p className="hero-sub">The Kiribati men&rsquo;s national football team. Small nation, big heart, and now a trophy to show for it.</p>
           <div className="btn-row">
             {featured ? <Link href={`/news/${featured.slug}`} className="btn btn-red">Read the final report</Link> : null}
-            <Link href="/te-eitei" className="btn btn-ghost">Meet the team</Link>
+            <Link href="/teams/mens" className="btn btn-ghost">Meet the team</Link>
           </div>
         </div>
         <Waves />
@@ -131,15 +132,15 @@ export default async function Home() {
         <div className="wrap">
           <h2 id="explore" className="h2" style={{ marginBottom: 32 }}>Explore</h2>
           <nav className="key-links" aria-label="Key pages">
-            <Link href="/te-eitei">
-              <h3>The squad</h3>
-              <p>Players, staff and honours of the men&rsquo;s national team.</p>
-              <span className="go">View the squad</span>
+            <Link href="/teams">
+              <h3>National teams</h3>
+              <p>Men&rsquo;s, women&rsquo;s, futsal and youth: squads, results and honours.</p>
+              <span className="go">See the teams</span>
             </Link>
-            <Link href="/fixtures">
-              <h3>Fixtures &amp; results</h3>
-              <p>Every Te Eitei match, with reports from the big ones.</p>
-              <span className="go">See fixtures</span>
+            <Link href="/competitions">
+              <h3>Competitions</h3>
+              <p>The KIFF Pro League, Police Cup, Betio Cup and Interschool Championship.</p>
+              <span className="go">See competitions</span>
             </Link>
             <Link href="/get-involved">
               <h3>Get involved</h3>
@@ -184,13 +185,7 @@ export default async function Home() {
               <h2 id="partners" className="h2">Our partners</h2>
               <Link href="/get-involved" className="text-link">Become a partner</Link>
             </div>
-            <div className="partners">
-              {partners.map((p) => (
-                <a key={p.name} className="partner" href={p.url || '#'} target="_blank" rel="noopener noreferrer">
-                  {p.logo ? <img src={p.logo} alt={p.name} /> : p.name}
-                </a>
-              ))}
-            </div>
+            <Partners partners={partners} />
           </div>
         </section>
       ) : null}

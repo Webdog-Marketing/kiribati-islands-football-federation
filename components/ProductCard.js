@@ -1,3 +1,5 @@
+import LocalPrice from './LocalPrice';
+
 export default function ProductCard({ product: p, showBlurb = false }) {
   return (
     <article className="product">
@@ -11,7 +13,7 @@ export default function ProductCard({ product: p, showBlurb = false }) {
           <h3>{p.name}</h3>
           {showBlurb && p.blurb ? <p className="product-blurb">{p.blurb}</p> : null}
           <div className="product-foot">
-            {p.price ? <span className="price">{p.price}</span> : null}
+            {p.price ? <LocalPrice handle={p.handle} fallback={p.price} /> : null}
             <span className="btn btn-red">{p.soldOut ? 'View' : 'Buy now'}</span>
           </div>
         </div>

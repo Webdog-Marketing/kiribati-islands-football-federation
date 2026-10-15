@@ -18,9 +18,12 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h2 className="footer-h">The team</h2>
+            <h2 className="footer-h">National teams</h2>
             <ul>
-              <li><Link href="/te-eitei">Squad</Link></li>
+              <li><Link href="/teams/mens">Te Eitei (men&rsquo;s)</Link></li>
+              <li><Link href="/teams/womens">Women&rsquo;s</Link></li>
+              <li><Link href="/teams/futsal">Futsal</Link></li>
+              <li><Link href="/teams/youth">Youth</Link></li>
               <li><Link href="/fixtures">Fixtures &amp; results</Link></li>
               <li><Link href="/news">News</Link></li>
               <li><Link href="/shop">Shop</Link></li>
@@ -30,6 +33,7 @@ export default function Footer() {
             <h2 className="footer-h">The federation</h2>
             <ul>
               <li><Link href="/about">About KIFF</Link></li>
+              <li><Link href="/competitions">Competitions</Link></li>
               <li><Link href="/get-involved">Partner with us</Link></li>
               <li><Link href="/get-involved#volunteer">Volunteer</Link></li>
               <li><Link href="/contact">Contact</Link></li>

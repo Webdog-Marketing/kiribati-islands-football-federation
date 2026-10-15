@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import { formatDate, isPlayed, isKiribati, resultFor } from '@/lib/format';
 
-export default function FixtureRow({ f }) {
+export default function FixtureRow({ f, teamLabel }) {
   const played = isPlayed(f);
   const res = resultFor(f);
   return (
     <li className="fixture">
       <div className="fixture-when">
         <time dateTime={f.date}>{formatDate(f.date, { day: 'numeric', month: 'short', year: 'numeric' })}</time>
-        <span>{[f.competition, f.round].filter(Boolean).join(', ')}</span>
+        <span>{[teamLabel, f.competition, f.round].filter(Boolean).join(', ')}</span>
       </div>
       <div className="fixture-teams">
         <span className={`team home ${isKiribati(f.home) ? 'is-us' : ''}`}>{f.home}</span>

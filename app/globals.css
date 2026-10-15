@@ -383,6 +383,88 @@ ul { margin: 0; padding: 0; list-style: none; }
 .regions li { counter-increment: region; display: grid; grid-template-columns: 56px 1fr; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); font-family: var(--font-display); font-size: clamp(1.375rem, 2.4vw, 1.875rem); font-weight: 600; text-transform: uppercase; line-height: 1.1; }
 .regions li::before { content: counter(region, decimal-leading-zero); font-family: var(--font-body); font-size: 0.875rem; font-weight: 500; color: var(--red); }
 
+/* National teams */
+.team-tabs { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 28px; }
+.team-tabs a { padding: 10px 18px; border: 2px solid var(--navy); border-radius: 999px; text-decoration: none; font-family: var(--font-display); text-transform: uppercase; font-weight: 600; letter-spacing: 0.03em; }
+.team-tabs a:hover { background: var(--mist); }
+.team-tabs a[aria-current='page'] { background: var(--navy); color: var(--white); }
+.team-tabs + .section { padding-top: clamp(40px, 5vw, 64px); }
+.team-grid, .comp-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+.team-card, .comp-card { display: block; text-decoration: none; height: 100%; }
+.team-card-media, .comp-card-media { aspect-ratio: 16 / 9; border-radius: var(--radius); overflow: hidden; background: var(--navy); display: grid; place-items: center; }
+.team-card-media img, .comp-card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.team-card-media .crest, .comp-card-media .crest { width: auto; height: 62%; object-fit: contain; }
+.team-card:hover .team-card-media img:not(.crest), .comp-card:hover .comp-card-media img:not(.crest) { transform: scale(1.03); }
+.team-card-body, .comp-card-body { padding-top: 16px; }
+.team-card h2, .comp-card h2 { font-size: clamp(1.75rem, 3vw, 2.375rem); margin-bottom: 8px; }
+.team-card:hover h2, .comp-card:hover h2 { color: var(--red); }
+.team-card p, .comp-card p { color: var(--ink-soft); margin: 0; }
+.team-nick { color: var(--red) !important; font-weight: 600; margin-bottom: 4px !important; }
+.comp-card .tag { margin-bottom: 4px; }
+.squad-h { font-size: 1.5rem; margin-bottom: 16px; }
+.squad .player { border-top: 3px solid var(--red); padding-top: 12px; }
+.player-line { display: flex; gap: 12px; align-items: baseline; }
+.player-line h4 { font-family: var(--font-display); text-transform: uppercase; font-size: 1.25rem; font-weight: 600; margin: 0; line-height: 1.1; }
+.player-line p { margin: 2px 0 0; font-size: 0.875rem; color: var(--ink-soft); }
+.player-line .player-note { color: var(--red); font-weight: 600; }
+.num-inline { min-width: 1.6em; }
+
+/* Competitions */
+.comp-intro { display: grid; grid-template-columns: 300px minmax(0, 680px); gap: clamp(32px, 5vw, 72px); align-items: start; }
+.comp-intro:not(:has(.comp-logo)) { grid-template-columns: minmax(0, 760px); }
+.comp-logo { width: 100%; max-width: 300px; background: var(--white); }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; background: var(--white); border-radius: var(--radius); }
+.standings { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; min-width: 520px; }
+.standings th, .standings td { padding: 14px 10px; text-align: center; border-bottom: 1px solid var(--line); }
+.standings thead th { background: var(--navy); color: var(--white); font-family: var(--font-display); font-weight: 600; letter-spacing: 0.04em; font-size: 0.9375rem; }
+.standings .c-team { text-align: left; font-weight: 600; }
+.standings thead .c-team { font-weight: 600; }
+.standings .c-pos { width: 56px; color: var(--ink-soft); }
+.standings thead .c-pos { color: var(--white); }
+.standings .c-pts { font-weight: 700; }
+.standings tbody tr:nth-child(-n + 1) .c-pos { color: var(--white); background: var(--red); font-weight: 700; }
+.team-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 32px; border-top: 1px solid var(--line-light); }
+.team-list li { padding: 14px 0; border-bottom: 1px solid var(--line-light); font-family: var(--font-display); text-transform: uppercase; font-size: 1.375rem; font-weight: 600; }
+.gallery { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); }
+.gallery a:hover img { opacity: 0.88; }
+
+/* Partners */
+.partner-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.partner-card { display: flex; flex-direction: column; height: 100%; border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; background: var(--white); color: var(--navy); }
+.partner-card:hover { border-color: var(--navy); }
+.partner-logo { flex: 1; min-height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 24px; }
+.partner-logo img { height: 56px; max-width: 70%; width: auto; object-fit: contain; }
+.partner-logo img + .partner-name { font-size: 1.125rem; }
+.partner-name { font-family: var(--font-display); font-size: 1.625rem; font-weight: 700; text-transform: uppercase; text-align: center; line-height: 1; }
+.partner-role { display: block; padding: 12px 16px; border-top: 1px solid var(--line); font-size: 0.875rem; font-weight: 600; color: var(--red); text-align: center; }
+
+/* News credits */
+.credit { margin: 16px 0 0; font-size: 0.9375rem; color: var(--ink-soft); }
+.credit a { color: var(--navy); font-weight: 600; text-decoration-color: var(--red); text-underline-offset: 3px; }
+.source-box { margin-top: 40px; padding: 24px; background: var(--mist); border-left: 4px solid var(--red); border-radius: var(--radius); }
+.source-box p { margin-bottom: 16px; }
+
+/* Contact form */
+.contact-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
+.contact-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field--full { grid-column: 1 / -1; }
+.field label { font-weight: 600; font-size: 0.9375rem; }
+.field label span { color: var(--red); }
+.field input, .field select, .field textarea {
+  font: inherit; color: var(--ink); background: var(--white); border: 1.5px solid rgba(0, 14, 48, 0.35); border-radius: var(--radius); padding: 12px 14px; min-height: 48px; width: 100%;
+}
+.field textarea { resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 3px solid var(--yellow); outline-offset: 1px; border-color: var(--navy); }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-foot { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.form-foot .btn { min-width: 180px; }
+.form-foot .btn[disabled] { opacity: 0.7; cursor: progress; }
+.form-error { margin: 0; color: var(--red); font-weight: 600; }
+.form-done { padding: 32px; background: var(--mist); border-radius: var(--radius); border-top: 4px solid var(--red); }
+.form-done h2 { font-size: 2rem; margin-bottom: 8px; }
+
 /* Forms / contact */
 .contact-card { background: var(--mist); border-radius: var(--radius); padding: clamp(24px, 4vw, 40px); }
 .contact-card h2 { font-size: 1.75rem; margin-bottom: 8px; }
@@ -411,6 +493,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 @media (max-width: 900px) {
   .shop-split,
+  .contact-layout,
+  .comp-intro,
   .stat-blocks,
   .result-grid, .mission-grid, .news-layout, .support, .two-col, .crest-story { grid-template-columns: 1fr; }
   .result-aside { border-left: 0; padding-left: 0; border-top: 1px solid var(--line-light); padding-top: 24px; }
@@ -433,6 +517,10 @@ ul { margin: 0; padding: 0; list-style: none; }
   .hero-inner { min-height: 620px; }
   .hero-media img { object-position: 62% 30%; }
   .squad, .board { grid-template-columns: repeat(2, 1fr); gap: 28px 16px; }
+  .team-grid, .comp-grid, .contact-form, .team-list { grid-template-columns: 1fr; }
+  .standings .c-hide { display: none; }
+  .standings { min-width: 0; }
+  .standings th, .standings td { padding: 12px 6px; }
   .board-member h3 { font-size: 1.1875rem; }
   .product-body { padding: 12px 12px 14px; }
   .product-body h3, .shop-split .product-body h3 { font-size: 1.0625rem; }

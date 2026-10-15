@@ -4,6 +4,7 @@ import '@fontsource/oswald/700.css';
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
+import Script from 'next/script';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { site } from '@/lib/site';
@@ -34,6 +35,17 @@ export default function RootLayout({ children }) {
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        {site.gaId ? (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${site.gaId}`} strategy="afterInteractive" />
+            <Script id="ga4" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${site.gaId}');`}
+            </Script>
+          </>
+        ) : null}
       </body>
     </html>
   );

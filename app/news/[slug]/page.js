@@ -21,6 +21,8 @@ export async function generateMetadata({ params }) {
     title: a.title,
     description: a.excerpt,
     openGraph: { title: a.title, description: a.excerpt, type: 'article', images: a.image ? [{ url: a.image }] : undefined },
+    // Republished articles point search engines at the original
+    alternates: a.sourceUrl ? { canonical: a.sourceUrl } : undefined,
   };
 }
 
@@ -41,6 +43,15 @@ export default async function Article({ params }) {
           </p>
           <h1>{a.title}</h1>
           {a.excerpt ? <p className="lede">{a.excerpt}</p> : null}
+          {a.sourceUrl ? (
+            <p className="credit">
+              {a.author ? <>By <strong>{a.author}</strong>. </> : null}
+              Originally published by{' '}
+              <a href={a.sourceUrl} target="_blank" rel="noopener">{a.sourceName || 'the original source'}</a>.
+            </p>
+          ) : a.author ? (
+            <p className="credit">By <strong>{a.author}</strong></p>
+          ) : null}
           {a.image ? (
             <figure className="article-figure">
               <img src={a.image} alt={a.imageAlt || ''} />
@@ -49,6 +60,12 @@ export default async function Article({ params }) {
         </header>
         <div className="wrap article-body">
           <Prose text={a.body} />
+          {a.sourceUrl ? (
+            <aside className="source-box">
+              <p>Written by {a.author || 'the original author'} and first published by {a.sourceName || 'the original publisher'}. Shared here with their permission.</p>
+              <a className="btn btn-navy" href={a.sourceUrl} target="_blank" rel="noopener">Read the original{a.sourceName ? ` on ${a.sourceName}` : ''}</a>
+            </aside>
+          ) : null}
           <div className="share">
             <strong>Share</strong>
             <a className="text-link" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`} target="_blank" rel="noopener noreferrer">Facebook</a>
