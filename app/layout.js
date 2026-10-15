@@ -49,7 +49,7 @@ gtag('config', '${site.gaId}');`}
           </>
         ) : null}
       
-<FormaConnectorScript id="forma-connector" data-forma-connector="1" src="/forma/visual-cms.js" strategy="afterInteractive" data-editor="https://formacms.app" data-content="/forma/content.json" />
+<FormaConnectorScript id="forma-connector" data-forma-connector="1" src="https://formacms.app/visual-cms.js" strategy="afterInteractive" data-editor="https://formacms.app" data-content="/forma/content.json" data-live="https://formacms.app/api/content?site=crDXuulyjyhyVbuE7DqllJeZe-uhOTuJbGsZPS7BN1c" />
 </body>
     </html>
   );
