@@ -9,6 +9,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { site } from '@/lib/site';
 import './globals.css';
+import FormaConnectorScript from "next/script";
+
 
 export const metadata = {
   metadataBase: new URL(site.url),
@@ -46,7 +48,9 @@ gtag('config', '${site.gaId}');`}
             </Script>
           </>
         ) : null}
-      </body>
+      
+<FormaConnectorScript id="forma-connector" data-forma-connector="1" src="/forma/visual-cms.js" strategy="afterInteractive" data-editor="https://formacms.app" data-content="/forma/content.json" />
+</body>
     </html>
   );
 }

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "repository": "Webdog-Marketing/kiribati-islands-football-federation",
+  "root": "",
+  "framework": "Next.js · App Router",
+  "entry": "app/layout.js",
+  "publicDir": "public",
+  "siteUrl": "https://kiri.football/",
+  "editorOrigin": "https://formacms.app",
+  "contentPath": "public/forma/content.json"
+}
