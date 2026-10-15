@@ -1,46 +1,107 @@
 import Link from 'next/link';
 import PageHero from '@/components/PageHero';
+import BoardMember from '@/components/BoardMember';
+import { getBoard, regionalAssociations } from '@/lib/airtable';
 
-export const metadata = { title: 'About', description: 'The Kiribati Islands Football Federation is the governing body of football across Kiribati\u2019s atolls, reefs and islands.' };
+export const revalidate = 600;
+export const metadata = {
+  title: 'About',
+  description: 'The Kiribati Islands Football Federation organises and grows football across Kiribati\u2019s islands. Meet the Executive Board.',
+};
 
-const pillars = [
-  { title: 'Awareness', text: 'Growing global recognition for Kiribati football. Sharing our teams, our competitions and our island nation with fans around the world.' },
-  { title: 'Revenue', text: 'Turning fans into supporters. Every jersey sold helps fund KIFF’s programmes, from grassroots development to our national teams.' },
-  { title: 'FIFA membership', text: 'Every match played, every fan reached and every partnership formed brings us a step closer to full OFC and FIFA membership.' },
-  { title: 'Football development', text: 'From inter-school championships to our national league, we’re building football at every level across Kiribati’s islands.' },
+const stats = [
+  { figure: '500', label: 'Registered players', text: 'Men, women and children playing football and futsal in KIFF-affiliated competitions.', tone: 'red' },
+  { figure: '2030', label: 'Target', text: 'An OFC associate member since 2007. Next: full OFC membership, then FIFA.', tone: 'navy' },
+  { figure: '1979', label: 'First international', text: 'Te Eitei played their first international fixture against Fiji on 30 August 1979.', tone: 'yellow' },
 ];
 
-export default function About() {
+export default async function About() {
+  const board = await getBoard();
   return (
     <>
       <PageHero
-        title="An island nation with big footballing ambitions"
+        title="About Kiribati Football"
         intro="The Kiribati Islands Football Federation is the governing body of football across Kiribati’s 34 atolls, reefs and islands."
-        image="/images/kiribati-aerial.jpg"
+        image="/images/kiff-executive-board.jpg"
         imageAlt=""
+        position="50% 35%"
       />
 
       <section className="section">
+        <div className="wrap">
+          <figure className="pull-quote">
+            <blockquote>
+              <p>Football connects every island in our nation. Our ambition is simple: to see Kiribati recognised on the world football stage.</p>
+            </blockquote>
+            <figcaption>Tekeeua Kauongo, Chief Executive Officer</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section className="section section--mist">
         <div className="wrap two-col">
           <div>
             <h2 className="h2">Our story</h2>
           </div>
           <div>
-            <p className="lede">We run national competitions for men, women and young players, operate our national teams, and are working toward full FIFA membership.</p>
-            <p>Football is more than a game here. It&rsquo;s a source of national pride and a way of bringing island communities together, from Tarawa to the outer islands.</p>
-            <p>Kiribati is home to more than 135,000 people spread across a vast stretch of the Pacific Ocean. Many of our players learn the game barefoot on sand, and our national team plays as Te Eitei.</p>
+            <p className="lede">Founded to organise and grow football across Kiribati’s islands, KIFF oversees national competitions, youth development, and our men’s and women’s national teams.</p>
+            <p>We’re an associate member of the Oceania Football Confederation, working toward full FIFA membership and building a football culture that reaches every atoll.</p>
+          </div>
+        </div>
+        <div className="wrap">
+          <ul className="stat-blocks">
+            {stats.map((s) => (
+              <li key={s.figure} className={`stat stat--${s.tone}`}>
+                <span className="stat-figure">{s.figure}</span>
+                <span className="stat-label">{s.label}</span>
+                <p>{s.text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="wrap two-col">
+          <div>
+            <h2 className="h2">Our mission</h2>
+          </div>
+          <div>
+            <p className="lede">To grow the game at every level in Kiribati.</p>
+            <p>From schools and grassroots clubs to our national teams, while building the partnerships, recognition and infrastructure needed to take Kiribati football onto the international stage.</p>
+            <dl className="facts">
+              <div><dt>First international</dt><dd>Fiji 24–0 Kiribati, 30 August 1979</dd></div>
+              <div><dt>Honours</dt><dd>2026 FMF IDC Premier Division; 2024 Outrigger Challenge Cup (futsal)</dd></div>
+            </dl>
           </div>
         </div>
       </section>
 
-      <section className="section section--mist">
-        <div className="wrap">
-          <h2 className="h2" style={{ marginBottom: 40 }}>What we focus on</h2>
-          <div className="pillars">
-            {pillars.map((p) => (
-              <div key={p.title}><h3>{p.title}</h3><p>{p.text}</p></div>
-            ))}
+      {board.length ? (
+        <section className="section section--red" aria-labelledby="board">
+          <div className="wrap">
+            <div className="section-head">
+              <div>
+                <h2 id="board" className="h2">Executive Board</h2>
+                <p>The people leading football in Kiribati.</p>
+              </div>
+            </div>
+            <ul className="board">
+              {board.map((m) => <BoardMember key={m.id || m.name} m={m} />)}
+            </ul>
           </div>
+        </section>
+      ) : null}
+
+      <section className="section" aria-labelledby="regions">
+        <div className="wrap two-col">
+          <div>
+            <h2 id="regions" className="h2">Regional football associations</h2>
+            <p className="muted" style={{ marginTop: 16 }}>KIFF oversees football across all of the islands of Kiribati, working with these regional associations.</p>
+          </div>
+          <ol className="regions">
+            {regionalAssociations.map((r) => <li key={r}>{r}</li>)}
+          </ol>
         </div>
       </section>
 

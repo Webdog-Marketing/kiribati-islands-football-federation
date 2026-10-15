@@ -2,7 +2,9 @@ import Link from 'next/link';
 import Waves from '@/components/Waves';
 import Sun from '@/components/Sun';
 import NewsCard from '@/components/NewsCard';
-import { getNews, getFixtures, getProducts, getPartners, milestones } from '@/lib/airtable';
+import ProductCard from '@/components/ProductCard';
+import { getNews, getFixtures, getPartners, milestones } from '@/lib/airtable';
+import { getProducts } from '@/lib/shopify';
 import { formatDate, isPlayed, isKiribati } from '@/lib/format';
 import { site } from '@/lib/site';
 
@@ -154,22 +156,11 @@ export default async function Home() {
             <h2 id="shop" className="h2">Wear the frigatebird</h2>
             <p className="lede">Every shirt sold helps fund KIFF, from grassroots football to the national team.</p>
             <div className="btn-row" style={{ marginTop: 24 }}>
-              <Link href="/shop" className="btn btn-yellow">Visit the shop</Link>
+              <Link href="/shop" className="btn btn-yellow">Shop all kit</Link>
             </div>
           </div>
           <div className="products">
-            {products.slice(0, 2).map((p) => (
-              <article key={p.id} className="product">
-                <div className="product-media">
-                  {p.image ? <img src={p.image} alt={p.name} loading="lazy" /> : <img className="crest" src="/logos/kiribati-crest.svg" alt="" />}
-                </div>
-                <div className="product-body">
-                  <h3>{p.name}</h3>
-                  {p.price ? <p className="price">{p.price}</p> : null}
-                  <a href={p.url || site.shopUrl} className="btn btn-red" target="_blank" rel="noopener noreferrer">Buy now</a>
-                </div>
-              </article>
-            ))}
+            {products.slice(0, 4).map((p) => <ProductCard key={p.id} product={p} />)}
           </div>
         </div>
       </section>
