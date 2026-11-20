@@ -13,7 +13,7 @@ No terminal needed for any of the steps below.
 
 1. Create a base called **Kiribati Football** and import each CSV in the `airtable` folder as its own table (**Add or import > CSV file**). Table names must match the file names exactly: `News`, `Fixtures`, `Players`, `Competitions`, `Standings`, `Partners`, `Board`.
 2. After importing, set these field types:
-   - Long text: `Body` (News), `Description` and `Gallery URLs` (Competitions), `Bio` (Board)
+   - Long text: `Body` (News), `Description`, `Groups`, `Key Facts` and `Gallery URLs` (Competitions), `Bio` (Board)
    - Date (ISO): `Date` (News, Fixtures)
    - Number: `Home Score`, `Away Score` (Fixtures); `Number` (Players); `Pos`, `P`, `W`, `D`, `L`, `GF`, `GA`, `Pts` (Standings); `Order` (Competitions, Partners, Board)
    - Checkbox: `Featured` (News) and every `Hidden` field
@@ -30,7 +30,9 @@ Edits in Airtable appear on the site within about 10 minutes. Tick **Hidden** to
 - **Fixtures**: `Team` is `mens`, `womens`, `futsal` or `youth` for national teams, or a competition's slug (e.g. `kiff-pro-league`) for domestic matches. Leave scores empty for upcoming matches.
 - **Players**: `Team` as above. `Position` should be `Goalkeeper`, `Defender`, `Midfielder` or `Forward` (players without one are listed as outfield players). `Note` shows under the name, e.g. "Captain" or "Golden Boot". Rows with a `Role` (e.g. Coach) are listed as staff.
 - **Competitions**: one row per competition. `Slug` is the end of the page address (`/competitions/police-cup`). `Teams` is a comma-separated list; if empty, the teams in the league table are used. `Gallery URLs` takes one image link per line, or attach photos to `Gallery`.
-- **Standings**: one row per team per competition. `Competition` must match the competition's slug. Goal difference is worked out for you.
+  - `Groups` (optional) lists pools, one per line: `Pool A: Golden Bridge, Liema, Profound`. The pools show as cards until results are entered in Standings.
+  - `Key Facts` (optional) shows under the description, one per line: `Kick-off: Saturday 14 November 2026`.
+- **Standings**: one row per team per competition. `Competition` must match the competition's slug. Goal difference is worked out for you. For a competition with pools, put the pool name in `Stage` (e.g. `Pool A`) and the page shows a separate table for each pool.
 - **Partners**: `Role` shows under the logo, e.g. "Official Kit Supplier".
 - **Board**: `Order` sets the running order on the About page.
 

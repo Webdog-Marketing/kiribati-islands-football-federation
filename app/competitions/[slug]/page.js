@@ -26,8 +26,17 @@ export default async function CompetitionPage({ params }) {
   const today = new Date().toISOString().slice(0, 10);
   const upcoming = fixtures.filter((f) => !isPlayed(f) && f.date >= today).sort((a, b) => (a.date > b.date ? 1 : a.date < b.date ? -1 : 0));
   const results = fixtures.filter(isPlayed).sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
-  const teams = c.teams.length ? c.teams : [...new Set(table.map((r) => r.team))].sort();
-  const stage = table[0]?.stage;
+  const groups = c.groups || [];
+  const facts = c.facts || [];
+  const teams = c.teams.length
+    ? c.teams
+    : groups.length
+      ? groups.flatMap((g) => g.teams)
+      : [...new Set(table.map((r) => r.team))].sort();
+  // One table per stage (e.g. "Pool A", "Pool B"), in the order they first appear
+  const stages = [...new Set(table.map((r) => r.stage || ''))];
+  const tables = stages.map((st) => ({ stage: st, rows: table.filter((r) => (r.stage || '') === st) }));
+  const multi = tables.length > 1;
 
   return (
     <>
@@ -36,7 +45,16 @@ export default async function CompetitionPage({ params }) {
       <section className="section">
         <div className="wrap comp-intro">
           {c.logo ? <img className="comp-logo" src={c.logo} alt={`${c.name} logo`} /> : null}
-          <div>{c.description ? <Prose text={c.description} /> : <p className="lede">{c.summary}</p>}</div>
+          <div>
+            {c.description ? <Prose text={c.description} /> : <p className="lede">{c.summary}</p>}
+            {facts.length ? (
+              <dl className="facts">
+                {facts.map((f) => (
+                  <div key={f.label + f.value}><dt>{f.label}</dt><dd>{f.value}</dd></div>
+                ))}
+              </dl>
+            ) : null}
+          </div>
         </div>
       </section>
 
@@ -44,11 +62,38 @@ export default async function CompetitionPage({ params }) {
         <div className="wrap">
           <div className="section-head">
             <div>
-              <h2 id="table" className="h2">League table</h2>
-              {stage || c.season ? <p className="muted">{[c.season, stage].filter(Boolean).join(', ')}</p> : null}
+              <h2 id="table" className="h2">{multi || (!table.length && groups.length) ? 'Pools' : 'League table'}</h2>
+              {!multi && (tables[0]?.stage || c.season) ? <p className="muted">{[c.season, tables[0]?.stage].filter(Boolean).join(', ')}</p> : null}
             </div>
           </div>
-          {table.length ? <StandingsTable rows={table} /> : <p className="empty">The table will appear here once the season is under way.</p>}
+          {table.length ? (
+            multi ? (
+              <div className="stage-tables">
+                {tables.map((t) => (
+                  <div key={t.stage}>
+                    <h3 className="squad-h">{t.stage || 'Table'}</h3>
+                    <StandingsTable rows={t.rows} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <StandingsTable rows={table} />
+            )
+          ) : groups.length ? (
+            <>
+              <ul className="pool-grid">
+                {groups.map((g) => (
+                  <li key={g.name} className="pool-card">
+                    <h3>{g.name}</h3>
+                    <ul>{g.teams.map((t) => <li key={t}>{t}</li>)}</ul>
+                  </li>
+                ))}
+              </ul>
+              <p className="muted" style={{ marginTop: 20 }}>Pool tables will appear here as results come in.</p>
+            </>
+          ) : (
+            <p className="empty">The table will appear here once the season is under way.</p>
+          )}
         </div>
       </section>
 

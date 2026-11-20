@@ -139,7 +139,7 @@ export default async function Home() {
             </Link>
             <Link href="/competitions">
               <h3>Competitions</h3>
-              <p>The KIFF Pro League, Police Cup, Betio Cup and Interschool Championship.</p>
+              <p>The KIFF Pro League, Business Runga, Police Cup, Betio Cup and Interschool Championship.</p>
               <span className="go">See competitions</span>
             </Link>
             <Link href="/get-involved">
